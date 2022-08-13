@@ -7,22 +7,56 @@
 # 3 4                               노드 : 1, 2, 3, 4
 # 노드 4개 경로 5개
 
+# 6 5 1
+# 1 2
+# 1 4
+# 2 3
+# 3 6
+# 4 5
+
 def BFS_way(list_a, start_w , list_BFS, check_BFS):
     # print(list_BFS)
     for i in list_a[start_w]:
-        print(i)
+        # print(i)
         if not(i in list_BFS):
             list_BFS.append(i)
             check_BFS.append(i)
 
     while len(check_BFS) != 0:
-        print(check_BFS)
+        # print(check_BFS)
         for j in list_a[check_BFS.pop(0)]:
             if not (j in list_BFS):
                 list_BFS.append(j)
                 check_BFS.append(j)
-                print(list_BFS)
-                print(check_BFS)
+                # print(list_BFS)
+                # print(check_BFS)
+
+def DFS_way(list_a, start_w , list_DFS):
+    for i in list_a[start_w]:
+        if not(i in list_DFS):
+            list_DFS.append(i)
+            # print(i)
+            # print(list_DFS)
+            DFS_way(list_a, i, list_DFS)
+
+
+
+def print_result(list_DFS, list_BFS, start_r):
+    print(start_r, end=' ')
+    for i in list_DFS:
+        if i == list_DFS[-1]:
+            print(i)
+        else:
+            print(i, end=' ')
+
+    print(start_r, end=' ')
+    for j in list_BFS:
+        if j == list_BFS[-1]:
+            print(j)
+        else:
+            print(j, end=' ')
+
+
 
 
     # for j in list_a[start_w]:
@@ -44,6 +78,7 @@ num_way = info[1]
 start = info[2]
 stack_list = []
 BFS_list = []
+DFS_list = []
 check_list=[]
 for i in range(num_node+1):
     stack_list.append([])
@@ -64,7 +99,7 @@ for i in range(num_way):
     stack_list[n[1]].append(n[0])
     stack_list[n[1]].sort()
 
-print(stack_list)
+# print(stack_list)
 
 # BSF
 # BFS_list.append(start)
@@ -75,12 +110,8 @@ print(stack_list)
 #
 # print(BFS_list)
 BFS_way(stack_list, start, BFS_list, check_list)
-
-print(BFS_list)
-print(check_list)
-# 6 5 1
-# 1 2
-# 1 4
-# 2 3
-# 3 6
-# 4 5
+DFS_way(stack_list, start, DFS_list)
+print_result(DFS_list, BFS_list, start)
+# print(BFS_list)
+# print(DFS_list)
+# print(check_list)
